@@ -1,6 +1,9 @@
 #include<iostream>
 #include<cmath>
 #include<cstring>
+#include<conio.h>
+#include<stdlib.h>
+#include<fstream>
 
 using namespace std;
 
@@ -28,16 +31,21 @@ class coustmer{
 
 void coustmer::avaiableroom()
 {
-    cout<<"sn.no        "<<"room type       "<<"total room      "<<"avaliable room      "<<"unit price"<<endl;
+   /* cout<<"sn.no        "<<"room type       "<<"total room      "<<"avaliable room      "<<"unit price"<<endl;
              for(int i=0;i<6;i++)
              {
                   cout<<i<<".   "<<ar[i]<<"             "<<totalroom[i]<<"                  "<<avali_room[i]<<"                 "<< proom[i]<<endl;
-             };
+             };*/
+    
+     
 }
 
 
 void coustmer::bookroom()
 {
+	ofstream rcfile("record.txt");
+	
+	
     //ask information
     top3:
           cout<<"please choose a room type from above";
@@ -64,6 +72,7 @@ void coustmer::bookroom()
        cout<<"PLEASE ENTER YOUR FULL NAME  :";
        cout<<endl;
        cin>>n1>>n2;
+       name=n1+" "+n2;
        cout<<endl;
        cout<<"PLEASE ENTER YOUR MOBILE NUMBER  :";
        cin>>mob_no;
@@ -76,21 +85,60 @@ void coustmer::bookroom()
        cout<<endl;
   
   }
+  
+  rcfile<<name<<"\n"<<mob_no<<"\n"<<idno<<"\n"<<occu<<"\n"<<rn<<"\n"<<rt<<"\n";
+  rcfile<<"the total amount is"<<"\t"<<proom[rn]*rt<<"\n";
+  rcfile<<"payment bank acc is"<<"\t"<<bankacc;
+  rcfile.close();
 }
+
+void check()
+{
+	char name[20];
+	int roll;
+		ifstream ifile("student.txt");
+		for(int i=0;i<2;i++)
+		{
+			ifile>>roll;
+			ifile>>name;
+			cout<<"\n"<<roll<<"\t"<<name;
+		}
+		ifile.close();
+}
+
 void coustmer::otherfaci()
 { 
-    cout<<"1.  swimming pool      "<<"free"<<endl;
-    cout<<"2.  wifi              "<<"free"<<endl;
-    cout<<"3.  extra shower (hot)"<<"rs 100 per head"<<endl;
-    cout<<"4.  camp fire         "<<"rrs 500 per 50 kg firewood"<<endl;
-    cout<<"5.  house on rent     "<<"rs 3000 per day"<<endl;
-    cout<<"6.  vehicles on rent  "<<"rs 5000 per day"<<endl;
-    cout<<"7.  tour guide        "<<"rs 500 per day"<<endl;
-
-    cout<<"please select the facilities from above";
-    cin>>fa[7];
+    
+    ifstream facifile("faci.txt");
+    string ch;
+    getline(facifile,ch);
     cout<<endl;
-    cout<<"the total amount of ur facilities are"<<endl;
+    cout<<endl;
+    
+    while(!facifile.eof())
+    {
+    	getline(facifile,ch);
+    	if(ch!="pfaci")
+		{
+    	cout<<ch<<endl;
+        }
+        else
+        {
+        	break;
+		}
+	}
+	int f,m,tfac=0;
+	cout<<"please GIVE THE S.NO OF THE DESIRED FACILITIES WHIOUT SPACE";
+    cin>>f;
+    while(f!=0)
+    {
+    	m=f%10;
+    	f=int(f/10);
+    	tfac=tfac+pfaci[m];
+    	
+	}
+    cout<<endl;
+    cout<<"the total amount of ur facilities are"<<tfac<<endl;
 }
 
 using namespace std;
@@ -115,9 +163,14 @@ int main()
 
     switch(x1)
     {
-        case 1: cout<<"happy"<<endl;
+        case 1:
+		system("cls"); 
+		cout<<"happy"<<endl;
+		check();
+	
                 break;
         case 2:
+        	system("cls");
             c1.avaiableroom();
               
              cout<<endl;
@@ -129,21 +182,28 @@ int main()
              switch(x2)
              {    
                  
-                 case 1: cout<<"WELCOME TO ROOM BOOKING MENU"<<endl;
+                 case 1:
+				 system("cls");
+				  cout<<"WELCOME TO ROOM BOOKING MENU"<<endl;
                          c1.bookroom();
                          break;
-                 case 2: cout<<"THE OTHER FACILITIES IN THIS HOTEL ARE"<<endl;
+                 case 2: 
+				 system("cls");
+				 cout<<"THE OTHER FACILITIES IN THIS HOTEL ARE"<<endl;
                         c1.otherfaci();
                          break;
-                 case 0: goto top2;
+                 case 0: 
+				 system("cls");
+				 goto top2;
                  default:
+                 	system("cls");
                   cout<<"ERROR!   ERROR!!    ERROR!!!"<<endl;
              }
             
         case 0: break;
 
         default:
-        
+        system("cls");
             cout<<"error  error  error"<<endl;
       
     };
