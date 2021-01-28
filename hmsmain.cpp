@@ -5,6 +5,7 @@
 #include<stdlib.h>
 #include<fstream>
 
+//start
 using namespace std;
 
 string ar[6]={"single", "double", "triple", "single", "double", "triple"};
